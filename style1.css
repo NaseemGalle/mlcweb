@@ -1,0 +1,140 @@
+.principal-card {
+  background-color: #4CAF50; /* Green */
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  max-width: 800px;
+  margin: 20px auto;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  font-family: sans-serif;
+}
+
+.card-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.principal-photo {
+  height: 200px;
+  width: 250px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 3px solid white;
+  background-color: white;
+}
+
+.principal-info h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.principal-info h3 {
+  margin: 5px 0 0;
+  font-size: 20px;
+  font-weight: normal;
+}
+
+.quote {
+  margin-top: 20px;
+  text-align: center;
+  font-style: italic;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+header, nav, section, footer {
+  padding: 10px;
+  text-align: center;
+  background: #5ba573;
+  color: white;
+  border: 1px solid white;
+}
+
+.banner {
+  height: 60px;
+}
+
+.links {
+  height: 40px;
+}
+
+.special-message {
+  height: 40px;
+}
+nav ul {
+    list-style-type: none;
+    padding: 0;
+  background: #20a4d8;
+   background-color: #5ba573;
+    margin: 0;
+    overflow: hidden;
+}
+nav ul li {
+    display: inline;
+    padding: 15px;
+}
+nav ul li a {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-weight: bold;
+}
+nav ul li a:hover {
+    text-decoration: underline;
+}
+.main-content {
+  display: grid;
+  grid-template-areas:
+    "motto motto"
+    "special-news deputy-message"
+    "principal-message asst-principal-message"
+    "vision mission"
+    "moments moments";
+  gap: 10px;
+  padding: 10px;
+}
+
+.special-news {
+  grid-area: special-news;
+}
+
+.deputy-message {
+  grid-area: deputy-message;
+}
+
+
+
+.asst-principal-message {
+  grid-area: asst-principal-message;
+}
+
+.motto {
+  grid-area: motto;
+}
+
+.vision {
+  grid-area: vision;
+}
+
+.mission {
+  grid-area: mission;
+}
+
+.moments {
+  grid-area: moments;
+}
+
+.footer {
+  height: 40px;
+}
