@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <title>உயிர் எழுத்துக்கள் - ගේම්</title>
+  <style>
+    body {
+      font-family: 'Noto Sans Tamil', Arial, sans-serif;
+      text-align: center;
+      background: #f9f9f9;
+      padding: 20px;
+    }
+    h1 {
+      background: #4caf50;
+      color: white;
+      padding: 15px;
+      border-radius: 10px;
+    }
+    #letter {
+      font-size: 100px;
+      margin: 30px 0;
+      color: #3f51b5;
+    }
+    .options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      max-width: 500px;
+      margin: auto;
+    }
+    button {
+      padding: 15px;
+      font-size: 40px;
+      background: #ff9800;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #e65100;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 30px;
+      font-weight: bold;
+    }
+    #scoreboard {
+      margin-top: 30px;
+      font-size: 30px;
+      background: #eeeeee;
+      padding: 15px;
+      border-radius: 10px;
+      display: inline-block;
+    }
+    .progress-container {
+      width: 80%;
+      background: #ddd;
+      border-radius: 20px;
+      margin: 20px auto;
+      height: 25px;
+    }
+    .progress-bar {
+      height: 25px;
+      width: 0%;
+      background: #4caf50;
+      border-radius: 20px;
+      text-align: center;
+      color: white;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>உயிர் எழுத்துக்கள் - ප්‍රණාක්ෂර </h1>
+   <h2>අකුරට හොඳම උච්චාරණය තෝරන්න</h2>
+
+  <div id="letter">அ</div>
+
+  <div class="options" id="options"></div>
+
+  <div id="result"></div>
+
+  <div id="scoreboard">
+    🏆 Score: <span id="score">0</span> | 🔢 Level: <span id="level">1</span>
+  </div>
+
+  <div class="progress-container">
+    <div class="progress-bar" id="progress">0%</div>
+  </div>
+
+   <script>
+    const uyirLetters = [
+      { letter: "அ", sound: "අ" },
+      { letter: "ஆ", sound: "ආ" },
+      { letter: "இ", sound: "ඉ" },
+      { letter: "ஈ", sound: "ඊ" },
+      { letter: "உ", sound: "උ" },
+      { letter: "ஊ", sound: "ඌ" },
+      { letter: "எ", sound: "එ" },
+      { letter: "ஏ", sound: "ඒ" },
+      { letter: "ஐ", sound: "ඓ" },
+      { letter: "ஒ", sound: "ඔ" },
+      { letter: "ஓ", sound: "ඕ" },
+      { letter: "ஔ", sound: "ඖ" }
+    ];
+
+    let current, score = 0, level = 1, questions = 0;
+
+    function newQuestion() {
+      current = uyirLetters[Math.floor(Math.random() * uyirLetters.length)];
+      document.getElementById("letter").textContent = current.letter;
+
+      let options = [current.sound];
+      while (options.length < 3) {
+        let random = uyirLetters[Math.floor(Math.random() * uyirLetters.length)].sound;
+        if (!options.includes(random)) options.push(random);
+      }
+      options.sort(() => Math.random() - 0.5);
+
+      let html = "";
+      options.forEach(opt => {
+        html += `<button onclick="checkAnswer('${opt}')">${opt}</button>`;
+      });
+      document.getElementById("options").innerHTML = html;
+      document.getElementById("result").textContent = "";
+    }
+
+    function checkAnswer(answer) {
+      questions++;
+      if (answer === current.sound) {
+        score += 10;
+        document.getElementById("result").textContent = "✅ හරි!";
+      } else {
+        document.getElementById("result").textContent = "❌ නැවත උත්සාහ කරන්න";
+      }
+
+      // update level (every 5 correct answers = new level)
+      level = Math.floor(score / 50) + 1;
+      document.getElementById("score").textContent = score;
+      document.getElementById("level").textContent = level;
+
+      // progress bar (out of 20 questions)
+      let progress = Math.min((questions / 20) * 100, 100);
+      document.getElementById("progress").style.width = progress + "%";
+      document.getElementById("progress").textContent = Math.floor(progress) + "%";
+
+      if (questions < 20) {
+        setTimeout(newQuestion, 1000);
+      } else {
+        document.getElementById("result").textContent = "🎉 ගේම් අවසන්! Total Score: " + score;
+      }
+    }
+
+    newQuestion();
+  </script>
+</body>
+</html>

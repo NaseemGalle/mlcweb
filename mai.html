@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <title>மெய் எழுத்துக்கள் - හල් අක්‍ෂර ගේම්</title>
+  <style>
+    body { font-family: 'Noto Sans Tamil', Arial, sans-serif; text-align: center; background: #f9f9f9; padding: 20px; }
+    h1 { background: #9c27b0; color: white; padding: 15px; border-radius: 10px; }
+    #letter { font-size: 100px; margin: 30px 0; color: #d32f2f; }
+    .options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; max-width: 500px; margin: auto; }
+    button { padding: 15px; font-size: 40px; background: #2196f3; color: white; border: none; border-radius: 10px; cursor: pointer; transition: 0.3s; }
+    button:hover { background: #1565c0; }
+    #result { margin-top: 20px; font-size: 22px; font-weight: bold; }
+    #scoreboard { margin-top: 30px; font-size: 20px; background: #eeeeee; padding: 15px; border-radius: 10px; display: inline-block; }
+    .progress-container { width: 80%; background: #ddd; border-radius: 20px; margin: 20px auto; height: 25px; }
+    .progress-bar { height: 25px; width: 0%; background: #9c27b0; border-radius: 20px; text-align: center; color: white; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>மெய் எழுத்துக்கள் - හල් අක්‍ෂර</h1>
+  <h3>මෙයි අකුරට හොඳම උච්චාරණය තෝරන්න</h3>
+
+  <div id="letter">க்</div>
+  <div class="options" id="options"></div>
+  <div id="result"></div>
+
+  <div id="scoreboard">
+    🏆 Score: <span id="score">0</span> | 🔢 Level: <span id="level">1</span>
+  </div>
+
+  <div class="progress-container">
+    <div class="progress-bar" id="progress">0%</div>
+  </div>
+
+  <script>
+    const meiLetters = [
+      { letter: "க்", sound: "ක්" },
+      { letter: "ங்", sound: "ං" },
+      { letter: "ச்", sound: "ච්" },
+      { letter: "ஞ்", sound: "ඤ්" },
+      { letter: "ட்", sound: "ට්" },
+      { letter: "ண்", sound: "ණ්" },
+      { letter: "த்", sound: "ත්" },
+      { letter: "ந்", sound: "න්ද්" },
+      { letter: "ப்", sound: "ප්" },
+      { letter: "ம்", sound: "ම්" },
+      { letter: "ய்", sound: "යි" },
+      { letter: "ர்", sound: "ර්" },
+      { letter: "ல்", sound: "ල්" },
+      { letter: "வ்", sound: "ව්" },
+      { letter: "ழ்", sound: "ල්(ළ)" },
+      { letter: "ள்", sound: "ල්(ළ)" },
+      { letter: "ற்", sound: "ට්ර්" },
+      { letter: "ன்", sound: "න්" }
+    ];
+
+    let current, score = 0, level = 1, questions = 0;
+
+    function newQuestion() {
+      current = meiLetters[Math.floor(Math.random() * meiLetters.length)];
+      document.getElementById("letter").textContent = current.letter;
+
+      let options = [current.sound];
+      while (options.length < 3) {
+        let random = meiLetters[Math.floor(Math.random() * meiLetters.length)].sound;
+        if (!options.includes(random)) options.push(random);
+      }
+      options.sort(() => Math.random() - 0.5);
+
+      document.getElementById("options").innerHTML =
+        options.map(opt => `<button onclick="checkAnswer('${opt}')">${opt}</button>`).join('');
+      document.getElementById("result").textContent = "";
+    }
+
+    function checkAnswer(answer) {
+      questions++;
+      if (answer === current.sound) {
+        score += 10;
+        document.getElementById("result").textContent = "✅ හරි!";
+      } else {
+        document.getElementById("result").textContent = "❌ නැවත උත්සාහ කරන්න";
+      }
+
+      level = Math.floor(score / 50) + 1;
+      document.getElementById("score").textContent = score;
+      document.getElementById("level").textContent = level;
+
+      let progress = Math.min((questions / 20) * 100, 100);
+      document.getElementById("progress").style.width = progress + "%";
+      document.getElementById("progress").textContent = Math.floor(progress) + "%";
+
+      if (questions < 20) setTimeout(newQuestion, 1000);
+      else document.getElementById("result").textContent = "🎉 ගේම් අවසන්! Total Score: " + score;
+    }
+
+    newQuestion();
+  </script>
+</body>
+</html>
